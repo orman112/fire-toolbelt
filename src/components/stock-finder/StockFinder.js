@@ -37,7 +37,6 @@ class StockFinder extends Component {
                             .catch(() => {
                                 console.log(`Something went wrong trying to find information for ${this.state.symbol}, please try again.`)
                             });
-                        //this.setState({ symbol: '', price: '' });
                     }}>
                     <label>Name: </label>
                     <input type='text' id='name' value={this.state.symbol} onChange={(event) => {

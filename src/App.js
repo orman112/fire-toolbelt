@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
 import './App.css';
 import StockFinder from './components/stock-finder/StockFinder';
+import IndexFinder from './components/index-finder/IndexFinder';
 import MainBanner from './components/main-banner/MainBanner';
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
           <div className='container'>
               <Route path="/" render={ () => <MainBanner />} />
               <Route path="/find-stock" render={() =><StockFinder />}/>
+              <Route path="/find-index" render={() =><IndexFinder />}/>
           </div>
         </div>
       </div >
