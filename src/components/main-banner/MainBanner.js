@@ -6,7 +6,7 @@ class MainBanner extends Component {
         return (
             <div>
                 <h1 className='jumbotron-heading'>Welcome to Fire Tools</h1>
-                <p class="lead text-muted">
+                <p className="lead text-muted">
                     Informational text goes here.
                 </p>
                 <p>

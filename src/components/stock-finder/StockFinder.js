@@ -14,7 +14,8 @@ class StockFinder extends Component {
     async fetchStock(symbol) {
         let requestUrl = `${url}${symbol}`;
         console.log(`Searching for information at ${requestUrl}`);
-        let result = await fetch(requestUrl).then(response => response.json());
+        let result = await fetch(requestUrl)
+            .then(response => response.json());
 
         return result;
     }
