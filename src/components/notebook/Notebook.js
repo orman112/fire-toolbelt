@@ -50,6 +50,12 @@ class Notebook extends Component {
         this.callWunderlistApi(listsApi, options)
     }
 
+    async deleteList(id) {
+        let options = this.getRequestOptions('DELETE');
+
+        this.callWunderlistApi(`${listApi}/${id}`, options);
+    }
+
     componentWillMount() {
         this.fetchLists();
     }
@@ -61,8 +67,8 @@ class Notebook extends Component {
                     (event) => {
                         event.preventDefault()
                         this.createList(this.state.listTitle)
-                            .then(response => {
-
+                            .then(() => {
+                                this.fetchLists();
                             })
                             .catch(() => {
                                 console.log(`Something went wrong while trying to create a list.`);
@@ -75,11 +81,18 @@ class Notebook extends Component {
                     <input type='submit' />
                 </form>
 
-                {this.state.lists.map((list, key) =>
-                    <div key={ list.title }>
-                        <h1>{ list.title }</h1>
-                    </div>
-                )}
+                <div className='row'>
+                    {this.state.lists.map((list, key) =>
+                        <div key={ list.title } className='col-sm-4 float-left mt-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <h5 className='card-title'>{ list.title }</h5>
+                                    <p className='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>                
             </div>
         )
     }
