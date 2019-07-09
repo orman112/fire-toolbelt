@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom';
 import StockFinder from '../stock-finder/StockFinder';
 import IndexFinder from '../index-finder/IndexFinder';
+import Notebook from '../notebook/Notebook';
 
 class MainBanner extends Component {
     render() {
@@ -23,6 +24,9 @@ class MainBanner extends Component {
                         <Route path="/find-index" render={() => <IndexFinder />} />
                     </div>
                 }>
+                </Route>
+                <Route path="/notes" render={() => <Notebook />}>
+
                 </Route>
             </div>
         )
