@@ -17,8 +17,14 @@ class Notebook extends Component {
 
     async callWunderlistApi(requestUrl, options) {
         let result = await fetch(requestUrl, options)
-            .then(response => response.json());
+        .then(response => {
+            return response.text()
+                .then((data) => {
+                    return data ? JSON.parse(data) : {};
+                });
+        });
 
+        console.log('response: ', result);
         return result;
     }
 
@@ -26,6 +32,7 @@ class Notebook extends Component {
         let options = {
             method: method,
             headers: new Headers({
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-Access-Token': accessToken,
                 'X-Client-ID': clientId
@@ -38,11 +45,12 @@ class Notebook extends Component {
     async fetchLists() {
         let options = this.getRequestOptions('GET');
 
-        console.log(`Fetching lists`);
+        console.log(`Fetching all lists`);
         this.callWunderlistApi(listsApi, options)
             .then(response => {
-                this.setState({lists: response});
-                console.log(this.state.lists);
+                this.setState((state) => {
+                    return {lists: response}
+                });
             });
     }
 
@@ -51,18 +59,14 @@ class Notebook extends Component {
         options.body = JSON.stringify({title: title});
 
         console.log(`Creating list titled ${title}`);
-        this.callWunderlistApi(listsApi, options)
+        this.callWunderlistApi(listsApi, options);
     }
 
-    async deleteList(id) {
+    async deleteList(id, revision) {
         let options = this.getRequestOptions('DELETE');
 
         console.log(`Deleting list ${id}`);
-        this.callWunderlistApi(`${listsApi}/${id}`, options);
-    }
-
-    logMessage(id) {
-        console.log(id);
+        this.callWunderlistApi(`${listsApi}/${id}?revision=${revision}`, options);
     }
 
     componentWillMount() {
@@ -95,7 +99,15 @@ class Notebook extends Component {
                         <div key={ list.title } className='col-sm-4 float-left mt-4'>
                             <div className='card'>
                                 <div className='card-body'>
-                                    <span onClick={this.logMessage.bind(this, list.id)}>
+                                    <span onClick={ (e) => 
+                                        this.deleteList(list.id, list.revision)
+                                            .then(() => {
+                                                this.fetchLists();
+                                            })
+                                            .catch(() => {
+                                                console.log(`Something went wrong trying to delete a list.`);
+                                            })
+                                        }>
                                         <FontAwesomeIcon icon={ faWindowClose } className='close' />
                                     </span>
                                     <h5 className='card-title'>{ list.title }</h5>
