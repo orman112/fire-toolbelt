@@ -48,9 +48,10 @@ class Notebook extends Component {
         console.log(`Fetching all lists`);
         this.callWunderlistApi(listsApi, options)
             .then(response => {
-                this.setState((state) => {
-                    return {lists: response}
-                });
+                // this.setState((state) => {
+                //     return {lists: response}
+                // });
+                this.setState({lists: response});
             });
     }
 
@@ -66,7 +67,10 @@ class Notebook extends Component {
         let options = this.getRequestOptions('DELETE');
 
         console.log(`Deleting list ${id}`);
-        this.callWunderlistApi(`${listsApi}/${id}?revision=${revision}`, options);
+        this.callWunderlistApi(`${listsApi}/${id}?revision=${revision}`, options)
+            .then(() => {
+                this.fetchLists();
+            });
     }
 
     componentWillMount() {
@@ -99,15 +103,7 @@ class Notebook extends Component {
                         <div key={ list.title } className='col-sm-4 float-left mt-4'>
                             <div className='card'>
                                 <div className='card-body'>
-                                    <span onClick={ (e) => 
-                                        this.deleteList(list.id, list.revision)
-                                            .then(() => {
-                                                this.fetchLists();
-                                            })
-                                            .catch(() => {
-                                                console.log(`Something went wrong trying to delete a list.`);
-                                            })
-                                        }>
+                                    <span onClick={ (e) => this.deleteList(list.id, list.revision) }>
                                         <FontAwesomeIcon icon={ faWindowClose } className='close' />
                                     </span>
                                     <h5 className='card-title'>{ list.title }</h5>
