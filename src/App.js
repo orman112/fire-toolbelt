@@ -13,10 +13,15 @@ class App extends Component {
           <div className='container'>
             <Route exact path="/" render={() =>
               <div>
-                <h1 className='jumbotron-heading'>Welcome to Fire Tools</h1>
+                <h1 className='jumbotron-heading'>Welcome to the Fire Tools</h1>
                 <p className="lead text-muted">
                   This application is meant to provide tools that help with personal finance.
               </p>
+
+                <p className="lead text-muted">
+                  Select from one of the links in the navigation above.
+  
+                </p>
               </div>
             } />
             <MainBanner />
