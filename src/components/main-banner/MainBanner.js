@@ -8,10 +8,6 @@ class MainBanner extends Component {
     render() {
         return (
             <div>
-                <h1 className='jumbotron-heading'>Welcome to Fire Tools</h1>
-                <p className="lead text-muted">
-                    Informational text goes here.
-                </p>
                 <Route path="/search-funds" render={() =>
                     <div>
                         <div>
@@ -20,11 +16,11 @@ class MainBanner extends Component {
                                 <Link className='btn btn-secondary my-2' to='/find-index'>Search For An Index</Link>
                             </p>
                         </div>
-                        <Route path="/find-stock" render={() => <StockFinder />} />
-                        <Route path="/find-index" render={() => <IndexFinder />} />
                     </div>
                 }>
-                </Route>
+                </Route>                
+                <Route path="/find-stock" render={() => <StockFinder />} />
+                <Route path="/find-index" render={() => <IndexFinder />} />
                 <Route path="/notes" render={() => <Notebook />}>
 
                 </Route>

@@ -11,7 +11,15 @@ class App extends Component {
         <Sidebar />
         <div className='jumbotron text-center'>
           <div className='container'>
-            <Route path="/" render={() => <MainBanner />} />
+            <Route exact path="/" render={() =>
+              <div>
+                <h1 className='jumbotron-heading'>Welcome to Fire Tools</h1>
+                <p className="lead text-muted">
+                  This application is meant to provide tools that help with personal finance.
+              </p>
+              </div>
+            } />
+            <MainBanner />
           </div>
         </div>
       </div>
