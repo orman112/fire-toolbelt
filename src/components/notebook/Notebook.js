@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
 
+//TODO: Generate new token and remove these from source control
 const listsApi = 'https://a.wunderlist.com/api/v1/lists';
 const accessToken = 'b46635f8b568e405865171dbf319d5964145ad77f47a4d479e2c6888099e';
 const clientId = '49109e3652c82c86cc54';
@@ -60,7 +62,13 @@ class Notebook extends Component {
         options.body = JSON.stringify({title: title});
 
         console.log(`Creating list titled ${title}`);
-        this.callWunderlistApi(listsApi, options);
+        this.callWunderlistApi(listsApi, options)
+            .then(() => {
+                this.fetchLists();
+            })
+            .catch(() => {
+                console.log(`Something went wrong while trying to create a list.`);
+            });
     }
 
     async deleteList(id, revision) {
@@ -70,6 +78,9 @@ class Notebook extends Component {
         this.callWunderlistApi(`${listsApi}/${id}?revision=${revision}`, options)
             .then(() => {
                 this.fetchLists();
+            })
+            .catch(() => {
+                console.log(`Something went wrong trying to delete list ${id}.`);
             });
     }
 
@@ -80,35 +91,33 @@ class Notebook extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={
+                <p className="lead text-muted">
+                    Create a list below by giving it a title.
+                </p>
+                <form className='form-inline justify-content-center' onSubmit={
                     (event) => {
                         event.preventDefault()
-                        this.createList(this.state.listTitle)
-                            .then(() => {
-                                this.fetchLists();
-                            })
-                            .catch(() => {
-                                console.log(`Something went wrong while trying to create a list.`);
-                            });
+                        this.state.listTitle ? 
+                            this.createList(this.state.listTitle) : 
+                            console.log('List title was empty. Could not create a new list.');
                     }}>
-                    <label>Name: </label>
-                    <input type='text' id='name' value={this.state.listTitle} onChange={(event) => {
-                        this.setState({ listTitle: event.target.value })
-                    }} />
-                    <input type='submit' />
+                    <input type='text' id='name' placeholder='Title' className='form-control mr-sm-2' 
+                        value={this.state.listTitle} onChange={(event) => {
+                            this.setState({ listTitle: event.target.value })
+                        }} />
+                    <button type='submit' className='btn btn-primary'>Create</button>
                 </form>
 
                 <div className='row'>
                     {this.state.lists.map((list, key) =>
                         <div key={ list.title } className='col-sm-4 float-left mt-4'>
                             <div className='card'>
-                                <div className='card-body'>
+                                <Link to={`/notes/lists/${list.id}/tasks`} className='card-body'>
                                     <span onClick={ (e) => this.deleteList(list.id, list.revision) }>
                                         <FontAwesomeIcon icon={ faWindowClose } className='close' />
                                     </span>
                                     <h5 className='card-title'>{ list.title }</h5>
-                                    <p className='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     )}
