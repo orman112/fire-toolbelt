@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-//import { Route } from 'react-router-dom';
 import Lists from './Lists.js';
 
 //TODO: Generate new token and remove these from source control
@@ -17,7 +16,7 @@ class Notebook extends Component {
         };
     }    
 
-    componentWillMount() {
+    componentDidMount() {
         this.fetchLists();
     }
 
@@ -93,7 +92,7 @@ class Notebook extends Component {
                     deleteList={this.deleteList.bind(this)} 
                     createList={this.createList.bind(this)}
                     lists={this.state.lists}
-                    listTitle={this.state.listTitle} />
+                    listTitle={this.state.listTitle} />                
             </div>
         )
     }
