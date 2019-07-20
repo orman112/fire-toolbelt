@@ -4,12 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import Tasks from './Tasks';
 
-//TODO: Generate new token and remove these from source control
 const listsApi = 'https://a.wunderlist.com/api/v1/lists';
 
 class Lists extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         
         this.state = {
             lists: [],
@@ -27,7 +26,7 @@ class Lists extends Component {
         console.log(`Fetching all lists`);
         this.props.callWunderlistApi(listsApi, options)
             .then(response => {
-                console.log('response: ', response);
+                console.log('lists: ', response);
                 this.setState({ lists: response });
             });
     }
@@ -100,7 +99,9 @@ class Lists extends Component {
                     </div>
                 } />
 
-                <Route exact path='/notebook/:id/tasks' component={Tasks} />
+                <Route exact path='/notebook/:id/tasks' render={(routeProps) =>
+                        <Tasks {...routeProps} {...this.props} />}
+                />
             </div>
         );
     }

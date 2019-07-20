@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Lists from './Lists.js';
 
+//TODO: Generate new token and remove these from source control
 const accessToken = 'b46635f8b568e405865171dbf319d5964145ad77f47a4d479e2c6888099e';
 const clientId = '49109e3652c82c86cc54';
 
@@ -14,7 +15,6 @@ class Notebook extends Component {
                     });
             });
 
-        console.log('result: ', result);
         return result;
     }
 
