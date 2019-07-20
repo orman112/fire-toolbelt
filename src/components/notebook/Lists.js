@@ -9,7 +9,7 @@ const listsApi = 'https://a.wunderlist.com/api/v1/lists';
 class Lists extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             lists: [],
             listTitle: ''
@@ -100,7 +100,7 @@ class Lists extends Component {
                 } />
 
                 <Route exact path='/notebook/:id/tasks' render={(routeProps) =>
-                        <Tasks {...routeProps} {...this.props} />}
+                    <Tasks {...routeProps} {...this.props} />}
                 />
             </div>
         );
