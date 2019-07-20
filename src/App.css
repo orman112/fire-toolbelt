@@ -31,3 +31,11 @@
     transform: rotate(360deg);
   }
 }
+
+/* Place User Defined Styles Below */
+.jumbotron {
+  background: none;
+}
+.card {
+  background-color: #e9ecef;
+}
