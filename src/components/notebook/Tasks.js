@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 
 class Tasks extends Component {
+    // constructor(props) {
+    //     super(props)
+    // }
+
     componentDidMount(){
         console.log('id: ', this.props.match.params.id);
+
     }
 
     render() {

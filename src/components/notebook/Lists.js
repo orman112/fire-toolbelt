@@ -4,13 +4,59 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import Tasks from './Tasks';
 
-class Lists extends Component {
-    constructor(props) {
-        super(props);
+//TODO: Generate new token and remove these from source control
+const listsApi = 'https://a.wunderlist.com/api/v1/lists';
 
+class Lists extends Component {
+    constructor() {
+        super();
+        
         this.state = {
-            listTitle: this.props.listTitle
-        }
+            lists: [],
+            listTitle: ''
+        };
+    }
+
+    componentDidMount() {
+        this.fetchLists();
+    }
+
+    async fetchLists() {
+        let options = this.props.getRequestOptions('GET');
+
+        console.log(`Fetching all lists`);
+        this.props.callWunderlistApi(listsApi, options)
+            .then(response => {
+                console.log('response: ', response);
+                this.setState({ lists: response });
+            });
+    }
+
+    async createList(title) {
+        let options = this.props.getRequestOptions('POST');
+        options.body = JSON.stringify({ title: title });
+
+        console.log(`Creating list titled ${title}`);
+        this.props.callWunderlistApi(listsApi, options)
+            .then(() => {
+                this.fetchLists();
+            })
+            .catch(() => {
+                console.log(`Something went wrong while trying to create a list.`);
+            });
+    }
+
+    async deleteList(id, revision) {
+        let options = this.props.getRequestOptions('DELETE');
+
+        console.log(`Deleting list ${id}`);
+        this.props.callWunderlistApi(`${listsApi}/${id}?revision=${revision}`, options)
+            .then(() => {
+                this.fetchLists();
+            })
+            .catch(() => {
+                console.log(`Something went wrong trying to delete list ${id}.`);
+            });
     }
 
     render() {
@@ -25,7 +71,7 @@ class Lists extends Component {
                             (event) => {
                                 event.preventDefault()
                                 this.state.listTitle ?
-                                    this.props.createList(this.state.listTitle) :
+                                    this.createList(this.state.listTitle) :
                                     console.log('List title was empty. Could not create a new list.');
                             }}>
                             <input type='text' id='name' placeholder='Title' className='form-control mr-sm-2'
@@ -36,11 +82,11 @@ class Lists extends Component {
                         </form>
 
                         <div className='row'>
-                            {this.props.lists.map((list, key) =>
+                            {this.state.lists.map((list, key) =>
                                 <div key={list.title} className='col-sm-4 float-left mt-4'>
                                     <div className='card'>
                                         <div className='card-body'>
-                                            <span onClick={(e) => this.props.deleteList(list.id, list.revision)}>
+                                            <span onClick={(e) => this.deleteList(list.id, list.revision)}>
                                                 <FontAwesomeIcon icon={faWindowClose} className='close' />
                                             </span>
                                             <Link to={`/notebook/${list.id}/tasks`} >
