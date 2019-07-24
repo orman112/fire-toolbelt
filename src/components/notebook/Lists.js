@@ -89,6 +89,9 @@ class Lists extends Component {
                                     </Link>
                                     <div class="ribbon"></div>
                                     <div class="wrapper"></div>
+                                    {/* <span onClick={(e) => this.deleteList(list.id, list.revision)}>
+                                        <FontAwesomeIcon icon={faWindowClose} className='close' />
+                                    </span> */}
                                 </div>
                             )}
                         </div>
