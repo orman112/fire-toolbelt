@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import './Lists.scss'
 import Tasks from './Tasks';
 
@@ -59,6 +59,11 @@ class Lists extends Component {
             });
     }
 
+    formatDate(date) {
+        var dateToFormat = new Date(date);
+        return `${dateToFormat.getDay()}/${dateToFormat.getMonth()}/${dateToFormat.getFullYear()}`
+    }
+
     render() {
         return (
             <div>
@@ -83,16 +88,21 @@ class Lists extends Component {
 
                         <div className='row'>
                             {this.state.lists.map((list, key) =>
-                                <div key={list.title} className='notebook mt-3'>
-                                    <Link to={`/notebook/${list.id}/tasks`} >
-                                        <h1 className='card-title'>{list.title}</h1>
-                                    </Link>
-                                    <div class="ribbon"></div>
-                                    <div class="wrapper"></div>
-                                    {/* <span onClick={(e) => this.deleteList(list.id, list.revision)}>
-                                        <FontAwesomeIcon icon={faWindowClose} className='close' />
-                                    </span> */}
-                                </div>
+                                <Link to={`/notebook/${list.id}/tasks`} key={list.title} className='notebook mt-3 text-decoration-none'>
+                                    <div className="ribbon"></div>
+                                    <div className="wrapper">
+                                        <h1 className='title text-white'>{list.title}</h1>
+                                    </div>
+                                    <span onClick={(e) => {
+                                        e.preventDefault();
+                                        this.deleteList(list.id, list.revision);
+                                    }}>
+                                        <FontAwesomeIcon icon={faTrashAlt} className='close' />
+                                    </span>
+                                    <div className='created-date'>
+                                        <small>Created: {this.formatDate(list.created_at)}</small>
+                                    </div>
+                                </Link>
                             )}
                         </div>
                     </div>

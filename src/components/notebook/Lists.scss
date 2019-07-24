@@ -5,9 +5,6 @@ $rib_color: #058E72;
 $wrap_color: #333;
 $pg_thick: 2px;
 
-body{
-  background-color: #666;
-}
 .notebook{
   background-color: $nb_color;
   border: 1px solid darken($nb_color,10%);
@@ -17,7 +14,7 @@ body{
   position: relative;
   width: 20em;
   height: 28em;
-  
+
   .ribbon{
     background-color: $rib_color;
     border-left: 1px solid darken($rib_color,10%);
@@ -42,14 +39,32 @@ body{
     left: -1px;
     right: -1px;
     z-index: 1;
+    display: table;
+    width: 100%;
+
+    .title {
+      display: table-cell;
+      vertical-align: middle;
+      font-family: "Lato", Arial;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
   }
-  
-  h1{
-    color: rgba(255,255,255,.44);
+
+  .created-date {
+    color: $wrap_color;
     font-family: "Lato", Arial;
-    font-weight: 700;
-    margin: 2em 0 0 0;
-    text-align: center;
     text-transform: uppercase;
+    font-weight: 700;
+    position: absolute;
+    bottom: 0;
+    float: left;
+    margin: 0 10px 0 10px;
+  }
+
+  .close {
+    float: left;
+    margin: 10px 0 0 10px;
+    color: crimson;
   }
 }
