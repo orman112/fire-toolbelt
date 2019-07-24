@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import './Lists.scss'
 import Tasks from './Tasks';
 
 const listsApi = 'https://a.wunderlist.com/api/v1/lists';
@@ -63,8 +64,8 @@ class Lists extends Component {
             <div>
                 <Route exact path='/notebook' render={() =>
                     <div>
-                        <p className="lead text-muted">
-                            Create a list below by giving it a title.
+                        <p className="lead text-white">
+                            Create a new notebook by giving it a title.
                         </p>
                         <form className='form-inline justify-content-center' onSubmit={
                             (event) => {
@@ -82,17 +83,12 @@ class Lists extends Component {
 
                         <div className='row'>
                             {this.state.lists.map((list, key) =>
-                                <div key={list.title} className='col-sm-4 float-left mt-4'>
-                                    <div className='card'>
-                                        <div className='card-body'>
-                                            <span onClick={(e) => this.deleteList(list.id, list.revision)}>
-                                                <FontAwesomeIcon icon={faWindowClose} className='close' />
-                                            </span>
-                                            <Link to={`/notebook/${list.id}/tasks`} >
-                                                <h5 className='card-title'>{list.title}</h5>
-                                            </Link>
-                                        </div>
-                                    </div>
+                                <div key={list.title} className='notebook mt-3'>
+                                    <Link to={`/notebook/${list.id}/tasks`} >
+                                        <h1 className='card-title'>{list.title}</h1>
+                                    </Link>
+                                    <div class="ribbon"></div>
+                                    <div class="wrapper"></div>
                                 </div>
                             )}
                         </div>
