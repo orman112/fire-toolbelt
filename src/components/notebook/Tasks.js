@@ -62,7 +62,7 @@ class Tasks extends Component {
     render() {
         return (
             <div>
-                <p className="lead text-muted">
+                <p className="lead text-white">
                     Create a task below by giving it a title.
                 </p>
                 <form className='form-inline justify-content-center' onSubmit={
