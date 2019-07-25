@@ -8,6 +8,7 @@ import Tasks from './Tasks';
 const listsApi = 'https://a.wunderlist.com/api/v1/lists';
 
 class Notebooks extends Component {
+    //The Notebook component is the container for the rest of the Wunderlist API components
     constructor(props) {
         super(props);
 

@@ -5,12 +5,16 @@ import Notes from './Notes';
 const tasksApi = 'https://a.wunderlist.com/api/v1/tasks';
 
 class Tasks extends Component {
+    //The Tasks component is really just needed to provide a title for the notes
+    //for some reason, the Wunderlist API doesn't allow notes associated to Lists (even though their docs say they do)
     constructor(props) {
         super(props);
 
         this.state = {
             tasks: [],
             taskTitle: '',
+            tasksAreEmpty: false,
+            loading: true,
             parentListId: parseInt(this.props.match.params.id)
         };
     }
@@ -25,10 +29,10 @@ class Tasks extends Component {
         let options = this.props.getRequestOptions('GET');
 
         console.log(`Fetching all tasks for list ${this.state.parentListId}`);
-        this.props.callWunderlistApi(`${tasksApi}?list_id=${listId}`, options)
+        return this.props.callWunderlistApi(`${tasksApi}?list_id=${listId}`, options)
             .then(response => {
                 console.log('tasks: ', response);
-                this.setState({ tasks: response });
+                this.setState({ tasks: response, tasksAreEmpty: response.length === 0 });
             });
     }
 
@@ -82,12 +86,12 @@ class Tasks extends Component {
                     {
                         this.state.tasks.map((task) =>
                             <div key={task.title} className='notebook-page col-5'>
-                                <Notes task={task} />
+                                <Notes task={task} deleteTask={this.deleteTask.bind(this)} />
                             </div>
                         )
                     }
                     {
-                        !this.state.tasks.length &&
+                        this.state.tasksAreEmpty &&
                         <div className='ml-auto mr-auto'>
                             <h2>You have not created any notes yet.</h2>
                             <h3>Create one above and don't forget to give it a title!</h3>

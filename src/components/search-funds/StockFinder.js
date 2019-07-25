@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 const url = 'https://financialmodelingprep.com/api/v3/stock/real-time-price/'
 
 class StockFinder extends Component {
+    //Stockfinder is used to search for individual stocks by their ticker symbol
     constructor() {
         super();
         this.state = {

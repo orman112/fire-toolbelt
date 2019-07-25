@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 
 const url = 'https://financialmodelingprep.com/api/v3/majors-indexes/'
 
-class StockFinder extends Component {
+class IndexFinder extends Component {
+    //Make sure to include the correct ticker for index you are looking for
+    //A common 'gotcha' is not including the period prefix
     constructor() {
         super();
         this.state = {
@@ -61,4 +63,4 @@ class StockFinder extends Component {
     }
 }
 
-export default StockFinder;
+export default IndexFinder;

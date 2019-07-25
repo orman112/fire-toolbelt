@@ -4,6 +4,7 @@ import StockFinder from './StockFinder';
 import IndexFinder from './IndexFinder';
 
 class SearchFunds extends Component {
+    //Container component for searching stocks and indexes
     render() {
         return (
             <div>

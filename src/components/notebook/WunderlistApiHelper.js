@@ -6,6 +6,8 @@ const accessToken = 'b46635f8b568e405865171dbf319d5964145ad77f47a4d479e2c6888099
 const clientId = '49109e3652c82c86cc54';
 
 class WunderlistApiHelper extends Component {
+    //Helper class I created for reusable API methods
+
     async callWunderlistApi(requestUrl, options) {
         let result = await fetch(requestUrl, options)
             .then(response => {
