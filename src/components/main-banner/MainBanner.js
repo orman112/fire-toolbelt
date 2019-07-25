@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
-import Notebook from '../notebook/Notebook';
+import WunderlistApiHelper from '../notebook/WunderlistApiHelper';
 import SearchFunds from '../search-funds/SearchFunds';
 
 class MainBanner extends Component {
@@ -8,7 +8,7 @@ class MainBanner extends Component {
         return (
             <div>
                 <Route path="/search-funds" render={() => < SearchFunds />} />
-                <Route path="/notebook" render={() => <Notebook />} />
+                <Route path="/notebook" render={() => <WunderlistApiHelper />} />
             </div>
         )
     }

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import './Notes.scss';
 
 const tasksApi = 'https://a.wunderlist.com/api/v1/tasks';
 
-class Tasks extends Component {
+class Notes extends Component {
     constructor(props) {
         super(props);
 
@@ -78,30 +79,31 @@ class Tasks extends Component {
                         }} />
                     <button type='submit' className='btn btn-primary'>Create</button>
                 </form>
-                {
-                    this.state.tasks.map((task) =>
-                        <div key={task.title} className='col-sm-4 float-left mt-4'>
-                            <div className='card'>
-                                <div className='card-body'>
+                <div class='row mt-4'>
+                    {
+                        this.state.tasks.map((task) =>
+                            <div key={task.title} className='notebook-page col-5'>
+                                <span>
                                     <span onClick={(e) => this.deleteTask(task.id, task.revision)}>
                                         <FontAwesomeIcon icon={faWindowClose} className='close' />
                                     </span>
-                                    <h5 className='card-title'>{task.title}</h5>
-                                </div>
+                                    <h1 className='title text-muted'>{task.title}</h1>
+                                    <textarea id="page" cols="30" rows="10" placeholder="well...start note taking"></textarea>
+                                </span>
                             </div>
+                        )
+                    }
+                    {
+                        !this.state.tasks.length &&
+                        <div className='ml-auto mr-auto'>
+                            <h2>You have not created any tasks yet.</h2>
+                            <h3>Create one above and don't forget to give it a title!</h3>
                         </div>
-                    )
-                }
-                {
-                    !this.state.tasks.length &&
-                    <div>
-                        <h2>You have not created any tasks yet.</h2>
-                        <h3>Create one above and don't forget to give it a title!</h3>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         )
     }
 }
 
-export default Tasks;
+export default Notes;

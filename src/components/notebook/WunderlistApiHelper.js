@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Lists from './Lists.js';
+import Notebooks from './Notebooks';
 
 //TODO: Generate new token and remove these from source control
 const accessToken = 'b46635f8b568e405865171dbf319d5964145ad77f47a4d479e2c6888099e';
 const clientId = '49109e3652c82c86cc54';
 
-class Notebook extends Component {
+class WunderlistApiHelper extends Component {
     async callWunderlistApi(requestUrl, options) {
         let result = await fetch(requestUrl, options)
             .then(response => {
@@ -35,7 +35,7 @@ class Notebook extends Component {
     render() {
         return (
             <div>
-                <Lists 
+                <Notebooks 
                     callWunderlistApi={this.callWunderlistApi.bind(this)}
                     getRequestOptions={this.getRequestOptions.bind(this)} 
                 />                
@@ -44,4 +44,4 @@ class Notebook extends Component {
     }
 }
 
-export default Notebook;
+export default WunderlistApiHelper;

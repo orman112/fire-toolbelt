@@ -2,60 +2,60 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import './Lists.scss'
-import Tasks from './Tasks';
+import './Notebooks.scss'
+import Notes from './Notes';
 
 const listsApi = 'https://a.wunderlist.com/api/v1/lists';
 
-class Lists extends Component {
+class Notebooks extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            lists: [],
-            listTitle: ''
+            notebooks: [],
+            notebookTitle: ''
         };
     }
 
     componentDidMount() {
-        this.fetchLists();
+        this.fetchNotebooks();
     }
 
-    async fetchLists() {
+    async fetchNotebooks() {
         let options = this.props.getRequestOptions('GET');
 
-        console.log(`Fetching all lists`);
+        console.log(`Fetching all notebooks`);
         this.props.callWunderlistApi(listsApi, options)
             .then(response => {
-                console.log('lists: ', response);
-                this.setState({ lists: response });
+                console.log('notebooks: ', response);
+                this.setState({ notebooks: response });
             });
     }
 
-    async createList(title) {
+    async createNotebook(title) {
         let options = this.props.getRequestOptions('POST');
         options.body = JSON.stringify({ title: title });
 
-        console.log(`Creating list titled ${title}`);
+        console.log(`Creating notebook titled ${title}`);
         this.props.callWunderlistApi(listsApi, options)
             .then(() => {
-                this.fetchLists();
+                this.fetchNotebooks();
             })
             .catch(() => {
-                console.log(`Something went wrong while trying to create a list.`);
+                console.log(`Something went wrong while trying to create a notebook.`);
             });
     }
 
-    async deleteList(id, revision) {
+    async deleteNotebook(id, revision) {
         let options = this.props.getRequestOptions('DELETE');
 
-        console.log(`Deleting list ${id}`);
+        console.log(`Deleting notebook ${id}`);
         this.props.callWunderlistApi(`${listsApi}/${id}?revision=${revision}`, options)
             .then(() => {
-                this.fetchLists();
+                this.fetchNotebooks();
             })
             .catch(() => {
-                console.log(`Something went wrong trying to delete list ${id}.`);
+                console.log(`Something went wrong trying to delete notebook ${id}.`);
             });
     }
 
@@ -75,32 +75,32 @@ class Lists extends Component {
                         <form className='form-inline justify-content-center' onSubmit={
                             (event) => {
                                 event.preventDefault()
-                                this.state.listTitle ?
-                                    this.createList(this.state.listTitle) :
-                                    console.log('List title was empty. Could not create a new list.');
+                                this.state.notebookTitle ?
+                                    this.createNotebook(this.state.notebookTitle) :
+                                    console.log('Notebook title was empty. Could not create a new notebook.');
                             }}>
                             <input type='text' id='name' placeholder='Title' className='form-control mr-sm-2'
-                                value={this.state.listTitle} onChange={(event) => {
-                                    this.setState({ listTitle: event.target.value })
+                                value={this.state.notebookTitle} onChange={(event) => {
+                                    this.setState({ notebookTitle: event.target.value })
                                 }} />
                             <button type='submit' className='btn btn-primary'>Create</button>
                         </form>
 
                         <div className='row'>
-                            {this.state.lists.map((list, key) =>
-                                <Link to={`/notebook/${list.id}/tasks`} key={list.title} className='notebook mt-3 text-decoration-none'>
+                            {this.state.notebooks.map((notebook, key) =>
+                                <Link to={`/notebook/${notebook.id}/tasks`} key={notebook.title} className='notebook mt-3 text-decoration-none'>
                                     <div className="ribbon"></div>
                                     <div className="wrapper">
-                                        <h1 className='title text-white'>{list.title}</h1>
+                                        <h1 className='title text-white'>{notebook.title}</h1>
                                     </div>
                                     <span onClick={(e) => {
                                         e.preventDefault();
-                                        this.deleteList(list.id, list.revision);
+                                        this.deleteNotebook(notebook.id, notebook.revision);
                                     }}>
                                         <FontAwesomeIcon icon={faTrashAlt} className='close' />
                                     </span>
                                     <div className='created-date'>
-                                        <small>Created: {this.formatDate(list.created_at)}</small>
+                                        <small>Created: {this.formatDate(notebook.created_at)}</small>
                                     </div>
                                 </Link>
                             )}
@@ -109,11 +109,11 @@ class Lists extends Component {
                 } />
 
                 <Route exact path='/notebook/:id/tasks' render={(routeProps) =>
-                    <Tasks {...routeProps} {...this.props} />}
+                    <Notes {...routeProps} {...this.props} />}
                 />
             </div>
         );
     }
 }
 
-export default Lists;
+export default Notebooks;

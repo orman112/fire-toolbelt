@@ -41,14 +41,6 @@ $pg_thick: 2px;
     z-index: 1;
     display: table;
     width: 100%;
-
-    .title {
-      display: table-cell;
-      vertical-align: middle;
-      font-family: "Lato", Arial;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
   }
 
   .created-date {
@@ -62,9 +54,18 @@ $pg_thick: 2px;
     margin: 0 10px 0 10px;
   }
 
-  .close {
-    float: left;
-    margin: 10px 0 0 10px;
-    color: crimson;
-  }
+}
+
+.title {
+  display: table-cell;
+  vertical-align: middle;
+  font-family: "Lato", Arial;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.close {
+  float: left;
+  margin: 10px 0 0 10px;
+  color: crimson;
 }
