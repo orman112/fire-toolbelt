@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import './Notebooks.scss'
-import Notes from './Notes';
+import Tasks from './Tasks';
 
 const listsApi = 'https://a.wunderlist.com/api/v1/lists';
 
@@ -109,7 +109,7 @@ class Notebooks extends Component {
                 } />
 
                 <Route exact path='/notebook/:id/tasks' render={(routeProps) =>
-                    <Notes {...routeProps} {...this.props} />}
+                    <Tasks {...routeProps} {...this.props} />}
                 />
             </div>
         );
