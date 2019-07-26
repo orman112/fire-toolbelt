@@ -86,7 +86,7 @@ class Tasks extends Component {
                     {
                         this.state.tasks.map((task) =>
                             <div key={task.title} className='notebook-page col-5'>
-                                <Notes task={task} deleteTask={this.deleteTask.bind(this)} />
+                                <Notes task={task} deleteTask={this.deleteTask.bind(this)}  {...this.props} />
                             </div>
                         )
                     }
