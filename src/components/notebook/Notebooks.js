@@ -70,7 +70,7 @@ class Notebooks extends Component {
             <div>
                 <Route exact path='/notebook' render={() =>
                     <div>
-                        <p className="lead text-white">
+                        <p className="lead text-muted">
                             Create a new notebook by giving it a title.
                         </p>
                         <form className='form-inline justify-content-center' onSubmit={

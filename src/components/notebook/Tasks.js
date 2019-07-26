@@ -82,7 +82,7 @@ class Tasks extends Component {
                         }} />
                     <button type='submit' className='btn btn-primary'>Create</button>
                 </form>
-                <div class='row mt-4'>
+                <div className='row mt-4'>
                     {
                         this.state.tasks.map((task) =>
                             <div key={task.title} className='notebook-page col-5'>
