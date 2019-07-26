@@ -9,6 +9,7 @@ class Notes extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             notes: [],
             showButton: false
         }
@@ -29,10 +30,13 @@ class Notes extends Component {
                 console.log('notes: ', response);
                 this.setState({ notes: response });
                 response.forEach(note => {
-                    newState[note.task_id] = note.content;
+                    newState[note.task_id] = { 'content': note.content, 'id': note.id};
                 });
 
                 this.setState(newState);
+            })
+            .then(() => {
+                this.setState({loading: false});
             });
     }
 
@@ -44,10 +48,11 @@ class Notes extends Component {
         //TODO: this only works currently while creating new notes.
         //Update to PATCH existing notes.
         event.preventDefault();
-        console.log(`Creating the following note: `, this.state[taskId]);
+        const note = this.state[taskId]
+        console.log(`Creating the following note: `, note);
 
         let options = this.props.getRequestOptions('POST');
-        options.body = JSON.stringify({ task_id: parseInt(taskId), content: this.state[taskId] });
+        options.body = JSON.stringify({ task_id: parseInt(taskId), content: note.content });
 
         this.props.callWunderlistApi(notesApi, options) 
             .then(() => {
@@ -63,28 +68,31 @@ class Notes extends Component {
 
     render() {
         return (
-            <form 
-                onSubmit={(event) => this.createUpdateNote(this.props.task.id, event)} 
-                onInput={() => this.setState({ showButton: true })}>
-                <span>
-                    <span onClick={() => this.props.deleteTask(this.props.task.id, this.props.task.revision)}>
-                        <FontAwesomeIcon icon={faWindowClose} className='close' />
+            <div>
+            { !this.state.loading &&
+                <form 
+                    onSubmit={(event) => this.createUpdateNote(this.props.task.id, event)} 
+                    onInput={() => this.setState({ showButton: true })}>
+                    <span>
+                        <span onClick={() => this.props.deleteTask(this.props.task.id, this.props.task.revision)}>
+                            <FontAwesomeIcon icon={faWindowClose} className='close' />
+                        </span>
+                        <h1 className='title text-muted'>
+                            {this.props.task.title}
+                        </h1>
+                        <textarea id="page" cols="30" rows="10" placeholder="well...start note taking" 
+                            value={this.state[this.props.task.id].content} 
+                            onChange={(event) => this.handleNoteChange(this.props.task.id, event)}>
+                        </textarea>
                     </span>
-                    <h1 className='title text-muted'>
-                        {this.props.task.title}
-                    </h1>
-                    <textarea id="page" cols="30" rows="10" placeholder="well...start note taking" 
-                        value={this.state[this.props.task.id]} 
-                        onChange={(event) => this.handleNoteChange(this.props.task.id, event)}>
-                    </textarea>
-                    {/* {this.renderNote(this.props.task.id)} */}
-                </span>
-                {
-                    this.state.showButton ?
-                    <button type='submit' className='btn btn-primary'>Save</button>
-                    : null
-                }
-            </form>
+                    {
+                        this.state.showButton ?
+                        <button type='submit' className='btn btn-primary'>Save</button>
+                        : null
+                    }
+                </form>
+            }
+            </div>
         )
     }
 }
