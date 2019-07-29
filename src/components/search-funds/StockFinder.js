@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Line, defaults } from 'react-chartjs-2';
-import Carousel from '../../utils/Carousel';
+import CarouselUtil from '../../utils/Carousel';
 
 const baseUrl = 'https://financialmodelingprep.com/api/v3';
 const historicalUrl = '/historical-price-full/';
@@ -33,6 +33,7 @@ class StockFinder extends Component {
                     .then((json) => {
                         let carouselItems = json.mostActiveStock.map(stock => {
                             return {
+                                key: stock.ticker,
                                 header: stock.ticker,
                                 title: stock.companyName,
                                 text: stock.price
@@ -110,7 +111,7 @@ class StockFinder extends Component {
                     Search for an individual stock by including the ticker below, 
                     or choose one of the following active stocks.
                 </p>
-                <Carousel 
+                <CarouselUtil 
                     groups={2} 
                     collection={this.state.stocksCarousel}
                 />
