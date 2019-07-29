@@ -24,7 +24,7 @@ class CarouselUtil extends Component {
             <Carousel.Item key={key}>
                 <div className='row card-deck mb-3'>
                     {item.map((i, k) =>
-                        <div key={k} className='col card'>
+                        <div key={k} className='card text-white bg-secondary' onClick={() => this.props.onClickCallBack(i)}>
                             <div className='card-header'>{i.header}</div>
                             <div className='card-body'>
                                 <div className='card-title'>
@@ -41,25 +41,11 @@ class CarouselUtil extends Component {
 
     render() {
         return (
-            <Carousel indicators={false} prevIcon={null} nextIcon={null}>
+            <Carousel indicators={false} controls={false} pauseOnHover={true}>
                 {
                     this.buildCarousel()
                 }
             </Carousel>
-
-            // <div id="carousel" className="carousel slide" data-ride="carousel">
-            //     <div className="carousel-inner" role="listbox">
-            //         {
-            //             this.buildCarousel()
-            //         }
-            //     </div>
-
-            //     <div className="controls-top">
-            //         <a className="btn-floating" href="#carousel" data-slide="next">
-            //             <FontAwesomeIcon icon={ faChevronCircleRight } />
-            //         </a>
-            //     </div>
-            // </div>
         )
     }
 }
