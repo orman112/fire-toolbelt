@@ -24,14 +24,15 @@ class CarouselUtil extends Component {
             <Carousel.Item key={key}>
                 <div className='row card-deck mb-3'>
                     {item.map((i, k) =>
-                        <div key={k} className='card text-white bg-secondary' onClick={() => this.props.onClickCallBack(i)}>
-                            <div className='card-header'>{i.header}</div>
-                            <div className='card-body'>
-                                <div className='card-title'>
-                                    <strong>{i.title}</strong>
+                        <div key={k} className={`card text-white ${this.props.onClickCallBack ? 'clickable' : ''}`}
+                            onClick={() => this.props.onClickCallBack(i)}>
+                                <div className='card-header'>{i.header}</div>
+                                <div className='card-body'>
+                                    <div className='card-title'>
+                                        <strong>{i.title}</strong>
+                                    </div>
+                                    <p className='card-text'>{i.text}</p>
                                 </div>
-                                <p className='card-text'>{i.text}</p>
-                            </div>
                         </div>
                     )}
                 </div>

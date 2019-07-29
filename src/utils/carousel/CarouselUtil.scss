@@ -1,3 +1,13 @@
+.card {
+    background-color: #6c757d;
+    &.clickable {
+        cursor: pointer;
+        &:hover {
+            background-color: #007bff;
+        }
+    }
+}
+
 .card-title {
     max-height: 48px;
     overflow: hidden;

@@ -48,43 +48,38 @@ class StockFinder extends Component {
         return result;
     }
 
-    async fetchStock(symbol) {
-        let requestUrl = `${baseUrl}${historicalUrl}${symbol}?timeseries=${timeSeries}`;
+    async fetchStockHistory(symbol) {
+        const requestUrl = `${baseUrl}${historicalUrl}${symbol}?timeseries=${timeSeries}`;
+        const dataValues = [];
+        const labelValues = [];
+
         let result = await fetch(requestUrl)
             .then(response => {
-                return response.json();
+                return response.json()
+                    .then((json) => {
+                        json.historical.forEach(record => {
+                            dataValues.push(record.close);
+                            labelValues.push(this.formatDate(record.date));
+                        });
+
+                        this.setState({ 
+                            symbol: json.symbol, 
+                            price: json.historical[json.historical.length - 1].close,
+                            labels: labelValues,
+                            data: dataValues
+                        });
+                    });
             });
 
         return result;
     }
 
     handleFormSubmit = (event) => {
-        //TODO: refactor and create method.
         event.preventDefault();
-        const dataValues = [];
-        const labelValues = [];
-        this.fetchStock(this.state.symbol)
-            .then(response => {
-                if (response.Error) {
-                    console.log('Could not complete request. Resetting symbol');
-                    this.setState({ symbol: '', price: 0 });
-                    return;
-                }
-                //TODO: move the following logic outside this scope
-                response.historical.forEach(record => {
-                    dataValues.push(record.close);
-                    labelValues.push(this.formatDate(record.date));
-                })
-                this.setState({ 
-                    symbol: response.symbol, 
-                    price: response.historical[response.historical.length - 1].close,
-                    labels: labelValues,
-                    data: dataValues
-                });
-            })
+        this.fetchStockHistory(this.state.symbol)
             .catch((error) => {
-                console.log('error response: ', error);
-                console.log(`Something went wrong trying to find information for ${this.state.symbol}, please try again.`)
+                console.log(`Something went wrong trying to find information for ${this.state.symbol}.`, error);
+                this.setState({ symbol: '', price: 0 });
             });
     }
 
@@ -95,7 +90,7 @@ class StockFinder extends Component {
 
     handleCarouselClick = (item) => {
         console.log('Carousel was clicked! ', item.key);
-        this.fetchStock(item.key);
+        this.fetchStockHistory(item.key);
     }
 
     render() {
