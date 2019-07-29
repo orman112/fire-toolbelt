@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronCircleLeft, faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import './CarouselUtil.scss'
 
 class CarouselUtil extends Component {
     chunkArray() {
@@ -22,28 +21,27 @@ class CarouselUtil extends Component {
         const chunkedArray = this.chunkArray();
 
         return chunkedArray.map((item, key) =>
-            <Carousel.Item>
-                <div className='row'>
+            <Carousel.Item key={key}>
+                <div className='row card-deck mb-3'>
                     {item.map((i, k) =>
-                        <div key={k} className='d-block col'>
-                            <div className="card-header">{i.header}</div>
-                            <div className="card-body">
-                                <Carousel.Caption>
-                                    <strong className="card-title">{i.title}</strong>
-                                    <p className="card-text">{i.text}</p>
-                                </Carousel.Caption>
+                        <div key={k} className='col card'>
+                            <div className='card-header'>{i.header}</div>
+                            <div className='card-body'>
+                                <div className='card-title'>
+                                    <strong>{i.title}</strong>
+                                </div>
+                                <p className='card-text'>{i.text}</p>
                             </div>
                         </div>
                     )}
                 </div>
             </Carousel.Item>
-            /* <div key={key} className={`carousel-item ${key <= 0 ? "active" : ""}`}> */
         )
     }
 
     render() {
         return (
-            <Carousel>
+            <Carousel indicators={false} prevIcon={null} nextIcon={null}>
                 {
                     this.buildCarousel()
                 }
@@ -57,9 +55,6 @@ class CarouselUtil extends Component {
             //     </div>
 
             //     <div className="controls-top">
-            //         <a className="btn-floating" href="#carousel" data-slide="prev">
-            //             <FontAwesomeIcon icon={ faChevronCircleLeft } />
-            //         </a>
             //         <a className="btn-floating" href="#carousel" data-slide="next">
             //             <FontAwesomeIcon icon={ faChevronCircleRight } />
             //         </a>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Line, defaults } from 'react-chartjs-2';
-import CarouselUtil from '../../utils/Carousel';
+import CarouselUtil from '../../utils/carousel/CarouselUtil';
 
 const baseUrl = 'https://financialmodelingprep.com/api/v3';
 const historicalUrl = '/historical-price-full/';
