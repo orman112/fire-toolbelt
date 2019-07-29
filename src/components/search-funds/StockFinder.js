@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Line, defaults } from 'react-chartjs-2';
+import Carousel from '../../utils/Carousel';
 
-const url = 'https://financialmodelingprep.com/api/v3/historical-price-full/';
-const timeSeries = 25; //gets last five days
+const baseUrl = 'https://financialmodelingprep.com/api/v3';
+const historicalUrl = '/historical-price-full/';
+const activeUrl = '/stock/actives';
+const timeSeries = 25;
 defaults.global.maintainAspectRatio = false // Don't maintain w/h ratio globally
 
 class StockFinder extends Component {
@@ -12,25 +15,45 @@ class StockFinder extends Component {
         this.state = {
             symbol: '',
             price: 0,
-            history: [],
             labels: [],
-            data: []
+            data: [],
+            stocksCarousel: []
         }
     }
 
-    async fetchStock(symbol) {
-        let requestUrl = `${url}${symbol}?timeseries=${timeSeries}`;
-        console.log(`Searching for information at ${requestUrl}`);
+    componentDidMount() {
+        this.getActiveStocks();
+    }
+
+    async getActiveStocks() {
+        let requestUrl = `${baseUrl}${activeUrl}`;
         let result = await fetch(requestUrl)
             .then(response => {
                 return response.json()
                     .then((json) => {
+                        let carouselItems = json.mostActiveStock.map(stock => {
+                            return {
+                                header: stock.ticker,
+                                title: stock.companyName,
+                                text: stock.price
+                            }
+                        });
+                        this.setState({ stocksCarousel: carouselItems });
+                        console.log('active stocks: ', carouselItems);
                         return json;
                     });
             });
 
+        return result;
+    }
 
-        console.log('result', result);    
+    async fetchStock(symbol) {
+        let requestUrl = `${baseUrl}${historicalUrl}${symbol}?timeseries=${timeSeries}`;
+        let result = await fetch(requestUrl)
+            .then(response => {
+                return response.json();
+            });
+
         return result;
     }
 
@@ -51,7 +74,6 @@ class StockFinder extends Component {
                     labelValues.push(this.formatDate(record.date));
                 })
                 this.setState({ 
-                    history: response.historical, 
                     symbol: response.symbol, 
                     price: response.historical[response.historical.length - 1].close,
                     labels: labelValues,
@@ -84,6 +106,14 @@ class StockFinder extends Component {
 
         return (
             <div>
+                <p className="lead text-muted">
+                    Search for an individual stock by including the ticker below, 
+                    or choose one of the following active stocks.
+                </p>
+                <Carousel 
+                    groups={2} 
+                    collection={this.state.stocksCarousel}
+                />
                 <form onSubmit={(event) => this.handleFormSubmit(event)}>
                     <label>Name: </label>
                     <input type='text' id='name' value={this.state.symbol} onChange={(event) => {
