@@ -22,10 +22,10 @@ class StockFinder extends Component {
     }
 
     componentDidMount() {
-        this.getActiveStocks();
+        this.fetchActiveStocks();
     }
 
-    async getActiveStocks() {
+    async fetchActiveStocks() {
         let requestUrl = `${baseUrl}${activeUrl}`;
         let result = await fetch(requestUrl)
             .then(response => {
@@ -40,7 +40,6 @@ class StockFinder extends Component {
                             }
                         });
                         this.setState({ stocksCarousel: carouselItems });
-                        console.log('active stocks: ', carouselItems);
                         return json;
                     });
             });
@@ -89,7 +88,6 @@ class StockFinder extends Component {
     }
 
     handleCarouselClick = (item) => {
-        console.log('Carousel was clicked! ', item.key);
         this.fetchStockHistory(item.key);
     }
 
@@ -114,7 +112,6 @@ class StockFinder extends Component {
                 </p>
                 <form className='form-inline justify-content-center my-3' onSubmit={(event) => this.handleFormSubmit(event)}>
                     <input type='text' id='name' placeholder='Symbol' className='form-control mr-sm-2' value={this.state.symbol} onChange={(event) => {
-                        //TODO: dont update on change, only on submit
                         this.setState({ symbol: event.target.value.toUpperCase() })
                     }} />
                     <button type='submit' className='btn btn-primary'>Search</button>

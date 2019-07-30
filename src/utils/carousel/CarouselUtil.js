@@ -6,14 +6,12 @@ class CarouselUtil extends Component {
     chunkArray() {
         const chunkSize = this.props.collection.length / this.props.groups;
         let tempArray = [];
-        console.log('chunk size: ', chunkSize);
 
         for (let i = 0; i < this.props.collection.length; i += chunkSize) {
             let chunk = this.props.collection.slice(i, i + chunkSize);
             tempArray.push(chunk);
         }
 
-        console.log('chunks: ', tempArray);
         return tempArray;
     }
 
