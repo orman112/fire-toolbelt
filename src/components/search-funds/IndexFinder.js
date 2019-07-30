@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CarouselUtil from '../../utils/carousel/CarouselUtil';
 
 const baseUrl = 'https://financialmodelingprep.com/api/v3/majors-indexes/'
 
@@ -9,13 +8,7 @@ class IndexFinder extends Component {
     constructor() {
         super();
         this.state = {
-            ticker: '',
-            price: 0,
-            name: '',
-            changes: 0,
-            labels: [],
-            data: [],
-            indexCarousel: []
+            indexes: []
         }
     }
 
@@ -28,19 +21,8 @@ class IndexFinder extends Component {
             .then((response) => {
                 return response.json()
                     .then(json => {
-                        let carouselItems = 
-                            json.majorIndexesList
-                                .slice(0, 15)
-                                .map((index) => {
-                                    return {
-                                        key: index.ticker,
-                                        header: index.ticker,
-                                        title: index.indexName,
-                                        text: index.price
-                                    }
-                                });
-
-                        this.setState({ indexCarousel: carouselItems });
+                        console.log(json.majorIndexesList);
+                        this.setState({ indexes: json.majorIndexesList })
                         return json;
                     });
             });
@@ -48,42 +30,33 @@ class IndexFinder extends Component {
         return result;
     }
 
-    async fetchIndex(ticker) {
-        let requestUrl = `${baseUrl}${ticker}`;
-        console.log(requestUrl);
-        let result = await fetch(requestUrl)
-            .then(response => {
-                return response.json()
-                    .then((json) => {                             
-                        this.setState({ 
-                            ticker: json.ticker, 
-                            price: json.price,
-                            name: json.indexName,
-                            change: json.changes
-                        });
-                    });
-            });
-
-        return result;
-    }
-
-    handleFormSubmit = (event) => {
-        event.preventDefault();
-        this.fetchIndex(this.state.ticker)
-            .catch((error) => {
-                console.log(`Something went wrong trying to find information for ${this.state.ticker}.`, error)
-            });
-    }
-
-    handleCarouselClick = (item) => {
-        console.log(item);
-        this.fetchIndex(item.key);
-    }
-
     render() {
         return (
             <div>
-                <p className="lead text-muted">
+                <table className="table text-left table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.indexes.map((index, key) =>
+                                <tr key={index.ticker}>
+                                    <th scope="row">{index.indexName}</th>
+                                    <td>{index.price}</td>
+                                    <td className={`${index.changes > 0 ? 'text-success' : 'text-danger'}`} >{index.changes}</td>
+                                </tr>
+
+                            )
+                        }
+                    </tbody>
+                </table>
+
+
+                {/* <p className="lead text-muted">
                     Search for an individual index by including the ticker below, 
                     or choose one of the following major indexes.
                 </p>
@@ -100,14 +73,7 @@ class IndexFinder extends Component {
                     <h2 className='lead text-muted'>Index Name: <strong>{this.state.name}</strong></h2>
                     <h2 className='lead text-muted'>Price: <strong>{this.state.price}</strong></h2>
                     <h2 className='lead text-muted'>Change: <strong>{this.state.change}</strong></h2>
-                </div>
-
-                <CarouselUtil 
-                    groups={3} 
-                    collection={this.state.indexCarousel}
-                    onClickCallBack={this.handleCarouselClick}
-                />
-
+                </div> */}
             </div>
         )
     }

@@ -13,10 +13,10 @@ class SearchFunds extends Component {
                     <div>
                         <p className="lead text-muted">
                             Click one of the buttons below to begin searching for individual stocks
-                            or an index that measures a section of the stock market.
+                            or browse indexes that measures a section of the stock market.
                         </p>
                         <Link className='btn btn-primary m-1' to='/search-funds/find-stock'>Search For A Stock</Link>
-                        <Link className='btn btn-secondary m-1' to='/search-funds/find-index'>Search For An Index</Link>
+                        <Link className='btn btn-secondary m-1' to='/search-funds/find-index'>Major Indexes</Link>
                     </div>
                 } />
 
