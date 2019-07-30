@@ -7,7 +7,7 @@ class MainBanner extends Component {
     render() {
         return (
             <div>
-                <Route path="/search-funds" render={() => < SearchFunds />} />
+                <Route path="/search-funds" render={() => <SearchFunds />} />
                 <Route path="/notebook" render={() => <WunderlistApiHelper />} />
             </div>
         )

@@ -112,17 +112,20 @@ class StockFinder extends Component {
                     Search for an individual stock by including the ticker below, 
                     or choose one of the following active stocks.
                 </p>
-                <form className='form-inline justify-content-center' onSubmit={(event) => this.handleFormSubmit(event)}>
+                <form className='form-inline justify-content-center my-3' onSubmit={(event) => this.handleFormSubmit(event)}>
                     <input type='text' id='name' placeholder='Symbol' className='form-control mr-sm-2' value={this.state.symbol} onChange={(event) => {
                         //TODO: dont update on change, only on submit
                         this.setState({ symbol: event.target.value.toUpperCase() })
                     }} />
                     <button type='submit' className='btn btn-primary'>Search</button>
                 </form>
-                <h2>Stock Symbol: {this.state.symbol}</h2>
-                <h2>Stock Price: {this.state.price}</h2>
 
-                <article className="canvas-container">
+                <div className='my-3'>
+                    <h2 className='lead text-muted'>Stock Symbol: <strong>{this.state.symbol}</strong></h2>
+                    <h2 className='lead text-muted'>Stock Price: <strong>{this.state.price}</strong></h2>
+                </div>
+
+                <article className='canvas-container my-3'>
                     <Line data={data} />
                 </article>
                 
