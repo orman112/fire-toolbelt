@@ -81,7 +81,7 @@ class Notes extends Component {
                             {this.props.task.title}
                         </h1>
                         <textarea id="page" cols="30" rows="10" placeholder="well...start note taking" 
-                            value={this.state[this.props.task.id].content} 
+                            value={this.state[this.props.task.id] ? this.state[this.props.task.id].content : ''} 
                             onChange={(event) => this.handleNoteChange(this.props.task.id, event)}>
                         </textarea>
                     </span>
