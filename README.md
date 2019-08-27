@@ -1,4 +1,4 @@
-# FIRE Toolbelt
+# Financial (FIRE) Toolbelt
 
 ## *FIRE* is an acronym for Financial Independence, Retire Early. This project is a web app created to provide tools to assist in reaching that goal.
 
