@@ -48,20 +48,24 @@ class Form extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className='col-6 mx-auto justify-content-center' onSubmit={this.handleSubmit}>
                 <h1>{this.props.title}</h1>
                 <input
                     name='name'
                     type='email'
+                    placeholder='Email'
                     ref={this.email}
+                    className='form-control my-sm-2'
                 />
                 <input
                     name='password'
                     type='password'
+                    placeholder='Password'
                     autoComplete='none'
                     ref={this.password}
+                    className='form-control my-sm-2'
                 />
-                <button type='submit'>Submit</button>
+                <button type='submit' className='btn btn-primary'>Submit</button>
             </form>
         )
     }

@@ -11,7 +11,7 @@ const Signup = props =>
                 action='createUser'
                 title='Create Account'
                 onSuccess={() => 
-                    auth.logout
+                    auth.logout()
                         .then(() => {
                             context.destroySession();
                             context.clearMessage();

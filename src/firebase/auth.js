@@ -8,7 +8,7 @@ import { auth } from './firebase'
  * @param {string} password 
  */
 const userSession = (action, email, password) => {
-    auth[`${action}WithEmailAndPassword`](email, password);
+    return auth[`${action}WithEmailAndPassword`](email, password);
 }
 
 
