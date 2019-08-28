@@ -4,10 +4,10 @@ import './App.css'
 
 import Header from './components/header/Header'
 import MainBanner from './components/main-banner/MainBanner'
-import FlashMessage from './components/FlashMessage'
-import Login from './components/Login'
-import Signup from './components/Signup'
-import { Consumer } from './components/AppProvider'
+import FlashMessage from './utils/auth/FlashMessage'
+import Login from './utils/auth/Login'
+import Signup from './utils/auth/Signup'
+import Authenticated from './utils/auth/Authenticated';
 
 class App extends Component {
   render() {
@@ -32,16 +32,7 @@ class App extends Component {
             <Route exact path='/login' component={() => <Login />} />
             <Route exact path='/signup' component={() => <Signup />} />
             <Route exact path='/dashboard' component={() => 
-              <Consumer>
-                {
-                  ({state}) => state.currentUser ? 
-                    <h1 className='content'>Protected dashboard!</h1> :
-                    <div className='content'>
-                      <h1>Access denied.</h1>
-                      <p>You are not authorized to access this page.</p>
-                    </div>
-                }
-              </Consumer>
+              <Authenticated />
             }/>
             <Route exact path='/signedOut' component={() => 
               <h1 className='content'>You're now signed out.</h1>} 

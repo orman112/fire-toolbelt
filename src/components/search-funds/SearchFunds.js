@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom';
 import StockFinder from './StockFinder';
 import IndexFinder from './IndexFinder';
+import Authenticated from '../../utils/auth/Authenticated';
 
 class SearchFunds extends Component {
+
     //Container component for searching stocks and indexes
     render() {
       
         return (
-            <div>
+            <Authenticated>
                 <Route exact path='/search-funds' render={() =>
                     <div>
                         <p className="lead text-muted">
@@ -22,7 +24,7 @@ class SearchFunds extends Component {
 
                 <Route exact path="/search-funds/find-stock" render={() => <StockFinder />} />
                 <Route exact path="/search-funds/find-index" render={() => <IndexFinder />} />
-            </div>
+            </Authenticated>
         )
     }
 }

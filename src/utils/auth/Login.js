@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import Form from '../shared/Form'
+import Form from '../../shared/Form'
 import { Consumer } from './AppProvider'
 
 const Login = props => 

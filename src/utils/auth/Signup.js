@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import Form from '../shared/Form'
-import { auth } from '../firebase'
+import Form from '../../shared/Form'
+import { auth } from '../../firebase'
 import { Consumer } from './AppProvider'
 
 const Signup = props => 

@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 
 import App from './App'
-import AppProvider from './components/AppProvider'
+import AppProvider from '../src/utils/auth/AppProvider'
 
 ReactDOM.render(
     <AppProvider>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Consumer } from '../components/AppProvider'
+import { Consumer } from './AppProvider'
 
 const FlashMessage = () => 
     <Consumer>

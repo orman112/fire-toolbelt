@@ -2,7 +2,7 @@ import React, {
   Component,
   createContext
 } from 'react';
-import { firebase } from '../firebase';
+import { firebase } from '../../firebase';
 export const {
   Provider,
   Consumer
