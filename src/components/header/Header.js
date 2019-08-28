@@ -5,7 +5,7 @@ import { Consumer } from '../AppProvider'
 
 const Header = props => {
     const handleLogout = context => {
-        auth.logOut();
+        auth.logout();
         context.destroySession();
         props.history.push('/signedOut');
     };
