@@ -1,5 +1,5 @@
 import React, { Component, createRef } from "react";
-//import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import { auth } from "../utils/firebase";
 import { toast } from "react-toastify";
 
@@ -78,13 +78,12 @@ class Form extends Component {
   }
 }
 
-//TODO: use prop-types npm package
-// Form.propTypes = {
-//     title: PropTypes.string.isRequired,
-//     action: PropTypes.string.isRequired,
-//     onSuccess: PropTypes.func,
-//     onError: PropTypes.func
-// }
+Form.propTypes = {
+  title: PropTypes.string.isRequired,
+  action: PropTypes.string.isRequired,
+  onSuccess: PropTypes.func,
+  onError: PropTypes.func
+};
 
 Form.defaultProps = {
   errors: "",

@@ -7,14 +7,7 @@ class Authenticated extends Component {
     return (
       <Consumer>
         {({ state }) =>
-          state.currentUser ? (
-            <div>
-              <h1 className="content">Thanks for logging in!</h1>
-              <p>{this.props.children}</p>
-            </div>
-          ) : (
-            <Redirect to="/" />
-          )
+          state.currentUser ? this.props.children : <Redirect to="/" />
         }
       </Consumer>
     );

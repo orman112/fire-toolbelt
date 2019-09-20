@@ -7,9 +7,9 @@ import MainBanner from "./components/main-banner/MainBanner";
 import FlashMessage from "./utils/auth/FlashMessage";
 import Login from "./utils/auth/Login";
 import Signup from "./utils/auth/Signup";
-import Authenticated from "./utils/auth/Authenticated";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Budget from "./components/budget/Budget";
 
 class App extends Component {
   render() {
@@ -40,11 +40,7 @@ class App extends Component {
             />
             <Route exact path="/login" component={() => <Login />} />
             <Route exact path="/signup" component={() => <Signup />} />
-            <Route
-              exact
-              path="/dashboard"
-              component={() => <Authenticated />}
-            />
+            <Route exact path="/budget" component={() => <Budget />} />
             <Route
               exact
               path="/signedOut"

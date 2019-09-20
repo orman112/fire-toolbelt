@@ -13,8 +13,8 @@ const Header = props => {
   const LoggedInNav = context => (
     <>
       <li>
-        <Link className="navbar-brand" to="/dashboard">
-          Dashboard
+        <Link className="navbar-brand" to="/budget">
+          Budget
         </Link>
       </li>
       <li>
