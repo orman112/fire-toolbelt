@@ -2,27 +2,27 @@ import React from "react";
 
 const BudgetNav = () => {
   return (
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
+    <ul className="nav nav-tabs">
+      <li className="nav-item">
+        <a className="nav-link" href="#">
           Link
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="#">
+      <li className="nav-item">
+        <a className="nav-link active" href="#">
           Active
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
+      <li className="nav-item">
+        <a className="nav-link" href="#">
           Link
         </a>
       </li>
-      <li class="nav-item">
+      <li className="nav-item">
         <a
-          class="nav-link disabled"
+          className="nav-link disabled"
           href="#"
-          tabindex="-1"
+          tabIndex="-1"
           aria-disabled="true"
         >
           Disabled
