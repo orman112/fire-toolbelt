@@ -5,16 +5,17 @@ const SavingsRate = () => {
   const [preTax401k, setPreTax401k] = useState(0);
   const [preTaxHsa, setPreTaxHsa] = useState(0);
   const [preTaxIra, setPreTaxIra] = useState(0);
-
-  const totalSavings = useMemo(() => {
-    return preTax401k + preTaxHsa + preTaxIra;
-  }, [preTax401k, preTaxHsa, preTaxIra]);
+  const [additionalSavings, setAdditionalSavings] = useState(0);
 
   const preTaxSavings = preTax401k + preTaxHsa;
   const grossPay = takeHomePay + preTaxSavings;
 
+  const totalSavings = useMemo(() => {
+    return preTaxSavings + preTaxIra + additionalSavings;
+  }, [preTaxSavings, preTaxIra, additionalSavings]);
+
   const savingsRate = useMemo(() => {
-    return (totalSavings / (takeHomePay + preTaxSavings)) * 100;
+    return ((totalSavings / (takeHomePay + preTaxSavings)) * 100).toFixed(2);
   }, [totalSavings, takeHomePay, preTaxSavings]);
 
   return (
@@ -57,7 +58,7 @@ const SavingsRate = () => {
           />
         </div>
         <div class="form-group">
-          <label for="HSA">
+          <label for="hsa">
             Does your health plan offer an HSA? If so, and you contribute to it,
             please enter that amount below. Also remember to include any
             contributions that your employer makes as well.
@@ -68,15 +69,15 @@ const SavingsRate = () => {
             }}
             type="number"
             class="form-control"
-            id="HSA"
+            id="hsa"
             placeholder="HSA Total"
           />
         </div>
         <div class="form-group">
           {/* TODO: add check mark to determine if it's Roth (after tax) or Traditional (Pre-tax) */}
-          <label for="IRA">
-            Finally, if you contribute any money to an IRA (Roth or Traditional)
-            please enter that amount next.
+          <label for="ira">
+            If you contribute any money to an IRA (Roth or Traditional) please
+            enter that amount next.
           </label>
           <input
             onChange={e => {
@@ -84,8 +85,24 @@ const SavingsRate = () => {
             }}
             type="number"
             class="form-control"
-            id="IRA"
+            id="ira"
             placeholder="IRA Total"
+          />
+        </div>
+        <div class="form-group">
+          <label for="additionalSavings">
+            Finally, please add include additional savings you make outside of a
+            401k, IRA, or HSA. This could include a normal savings account,
+            brokerage account, CD, etc.
+          </label>
+          <input
+            onChange={e => {
+              setAdditionalSavings(parseInt(e.target.value));
+            }}
+            type="number"
+            class="form-control"
+            id="additionalSacings"
+            placeholder="Additional Savings"
           />
         </div>
         {/* <div class="form-group form-check">
@@ -106,11 +123,13 @@ const SavingsRate = () => {
         {/* <button type="submit" class="btn btn-primary">
           Submit
         </button> */}
-        <h2>Gross Pay: {grossPay}</h2>
-        <h2>Pre-Tax Contributions: {preTaxSavings}</h2>
-        <h2>Paycheck After Taxes: {takeHomePay}</h2>
-        <h2>Total Savings: {totalSavings}</h2>
-        <h2>Total Savings Rate {savingsRate}%</h2>
+        <h2>Gross Pay: {isNaN(grossPay) ? 0 : grossPay}</h2>
+        <h2>
+          Pre-Tax Contributions: {isNaN(preTaxSavings) ? 0 : preTaxSavings}
+        </h2>
+        <h2>Paycheck After Taxes: {isNaN(takeHomePay) ? 0 : takeHomePay}</h2>
+        <h2>Total Savings: {isNaN(totalSavings) ? 0 : totalSavings}</h2>
+        <h2>Total Savings Rate {isNaN(savingsRate) ? 0 : savingsRate}%</h2>
       </form>
     </>
   );
