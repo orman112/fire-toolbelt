@@ -10,6 +10,7 @@ import Signup from "./utils/auth/Signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Budget from "./components/budget/Budget";
+import SavingsRate from "./components/savings-rate/SavingsRate";
 
 class App extends Component {
   render() {
@@ -41,6 +42,11 @@ class App extends Component {
             <Route exact path="/login" component={() => <Login />} />
             <Route exact path="/signup" component={() => <Signup />} />
             <Route exact path="/budget" component={() => <Budget />} />
+            <Route
+              exact
+              path="/savings-rate"
+              component={() => <SavingsRate />}
+            />
             <Route
               exact
               path="/signedOut"
