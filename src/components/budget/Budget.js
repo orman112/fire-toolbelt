@@ -5,14 +5,14 @@ import { db } from "../../utils/firebase/firebase";
 
 const Budget = () => {
   //TODO: use proptypes
-  const BudgetCategories = {
-    Mortgage: 1200,
-    Insurance: 200,
-    Cable: 50,
-    Grocery: 400,
-    Water: 150,
-    Electric: 200
-  };
+  // const BudgetCategories = {
+  //   Mortgage: 1200,
+  //   Insurance: 200,
+  //   Cable: 50,
+  //   Grocery: 400,
+  //   Water: 150,
+  //   Electric: 200
+  // };
 
   let handleClick = () => {
     db.collection("budget").add({

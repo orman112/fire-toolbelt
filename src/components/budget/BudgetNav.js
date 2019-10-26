@@ -4,29 +4,28 @@ const BudgetNav = () => {
   return (
     <ul className="nav nav-tabs">
       <li className="nav-item">
-        <a className="nav-link" href="#">
+        <button className="nav-link" href="#">
           Link
-        </a>
+        </button>
       </li>
       <li className="nav-item">
-        <a className="nav-link active" href="#">
+        <button className="nav-link active" href="#">
           Active
-        </a>
+        </button>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">
+        <button className="nav-link" href="#">
           Link
-        </a>
+        </button>
       </li>
       <li className="nav-item">
-        <a
+        <button
           className="nav-link disabled"
-          href="#"
           tabIndex="-1"
           aria-disabled="true"
         >
           Disabled
-        </a>
+        </button>
       </li>
     </ul>
   );

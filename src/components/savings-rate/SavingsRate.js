@@ -1,4 +1,9 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
+//Components
+import Four01kDetails from "./401kDetails";
+import HsaDetails from "./HsaDetails";
+import IraDetails from "./IraDetails";
+import AdditionalSavingsDetails from "./AdditionalSavingsDetails";
 
 const SavingsRate = () => {
   const [takeHomePay, setTakeHomePay] = useState(0);
@@ -18,108 +23,70 @@ const SavingsRate = () => {
     return ((totalSavings / (takeHomePay + preTaxSavings)) * 100).toFixed(2);
   }, [totalSavings, takeHomePay, preTaxSavings]);
 
+  const nextHandler = useCallback(e => {
+    e.preventDefault();
+    console.log("Next clicked");
+  }, []);
+
   return (
     <>
       <h2>All of the below is on a per-paycheck basis</h2>
       <form>
-        <div class="form-group">
-          <label for="takeHomePay">
-            Enter your total take home pay. This is the amount that shows up on
-            your paycheck.
-          </label>
-          <input
-            onChange={e => {
-              setTakeHomePay(parseInt(e.target.value));
-            }}
-            type="number"
-            class="form-control"
-            id="takeHomePay"
-            aria-describedby="takeHomeHelp"
-            placeholder="Enter take home pay"
-          />
-          <small id="takeHomeHelp" class="form-text text-muted">
-            This is the amount that shows up on your paycheck.
-          </small>
+        <div className="card form-group">
+          <div className="card-body">
+            <h5 className="card-title">Take Home Pay</h5>
+            <label htmlFor="takeHomePay">
+              Enter your total take home pay. This is the amount that shows up
+              on your paycheck.
+            </label>
+            <input
+              onChange={e => {
+                setTakeHomePay(parseInt(e.target.value));
+              }}
+              type="number"
+              className="form-control"
+              id="takeHomePay"
+              aria-describedby="takeHomeHelp"
+              placeholder="Enter take home pay"
+            />
+            <small id="takeHomeHelp" className="form-text text-muted">
+              This is the amount that shows up on your paycheck.
+            </small>
+            <button
+              className="btn btn-success"
+              onClick={e => {
+                nextHandler(e);
+              }}
+            >
+              Next
+            </button>
+          </div>
         </div>
-        <div class="form-group">
-          {/* TODO: add check mark to determine if it's Roth (after tax) or Traditional (Pre-tax) */}
-          <label for="401k">
-            If you contribute to a 401k, enter that amount here. Please include
-            any match that your employer may contribute.
-          </label>
-          <input
-            onChange={e => {
-              setPreTax401k(parseInt(e.target.value));
-            }}
-            type="number"
-            class="form-control"
-            id="401k"
-            placeholder="401k Total"
-          />
-        </div>
-        <div class="form-group">
-          <label for="hsa">
-            Does your health plan offer an HSA? If so, and you contribute to it,
-            please enter that amount below. Also remember to include any
-            contributions that your employer makes as well.
-          </label>
-          <input
-            onChange={e => {
-              setPreTaxHsa(parseInt(e.target.value));
-            }}
-            type="number"
-            class="form-control"
-            id="hsa"
-            placeholder="HSA Total"
-          />
-        </div>
-        <div class="form-group">
-          {/* TODO: add check mark to determine if it's Roth (after tax) or Traditional (Pre-tax) */}
-          <label for="ira">
-            If you contribute any money to an IRA (Roth or Traditional) please
-            enter that amount next.
-          </label>
-          <input
-            onChange={e => {
-              setPreTaxIra(parseInt(e.target.value));
-            }}
-            type="number"
-            class="form-control"
-            id="ira"
-            placeholder="IRA Total"
-          />
-        </div>
-        <div class="form-group">
-          <label for="additionalSavings">
-            Finally, please add include additional savings you make outside of a
-            401k, IRA, or HSA. This could include a normal savings account,
-            brokerage account, CD, etc.
-          </label>
-          <input
-            onChange={e => {
-              setAdditionalSavings(parseInt(e.target.value));
-            }}
-            type="number"
-            class="form-control"
-            id="additionalSacings"
-            placeholder="Additional Savings"
-          />
-        </div>
+        <Four01kDetails setPreTax401kHandler={setPreTax401k} />
+        <HsaDetails setPreTaxHsaHandler={setPreTaxHsa} />
+        <IraDetails setPreTaxIraHandler={setPreTaxIra} />
+        <AdditionalSavingsDetails
+          setAdditionalSavingsHandler={setAdditionalSavings}
+        />
         {/* <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1">
+          <label class="form-check-label" htmlFor="exampleCheck1">
             Check me out
           </label>
         </div> */}
-        <select class="custom-select">
-          <option selected>How often are you paid?</option>
-          <option value="1">Annually</option>
-          <option value="2">Monthly</option>
-          <option value="3">Semi-Monthly</option>
-          <option value="1">Biweekly</option>
-          <option value="2">Weekly</option>
-          <option value="3">Hourly</option>
-        </select>
+        <div className="d-none card form-group">
+          <div className="card-body">
+            <select className="custom-select">
+              <option defaultValue>How often are you paid?</option>
+              <option value="1">Annually</option>
+              <option value="2">Monthly</option>
+              <option value="3">Semi-Monthly</option>
+              <option value="1">Biweekly</option>
+              <option value="2">Weekly</option>
+              <option value="3">Hourly</option>
+            </select>
+          </div>
+        </div>
         {/* <button type="submit" class="btn btn-primary">
           Submit
         </button> */}
