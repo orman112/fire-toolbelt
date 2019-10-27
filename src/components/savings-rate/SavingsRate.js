@@ -1,9 +1,6 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 //Components
-import Four01kDetails from "./401kDetails";
-import HsaDetails from "./HsaDetails";
-import IraDetails from "./IraDetails";
-import AdditionalSavingsDetails from "./AdditionalSavingsDetails";
+import FormCard from "./FormCard";
 
 const SavingsRate = () => {
   const [takeHomePay, setTakeHomePay] = useState(0);
@@ -23,51 +20,93 @@ const SavingsRate = () => {
     return ((totalSavings / (takeHomePay + preTaxSavings)) * 100).toFixed(2);
   }, [totalSavings, takeHomePay, preTaxSavings]);
 
-  const nextHandler = useCallback(e => {
-    e.preventDefault();
-    console.log("Next clicked");
-  }, []);
-
   return (
     <>
       <h2>All of the below is on a per-paycheck basis</h2>
       <form>
-        <div className="card form-group">
-          <div className="card-body">
-            <h5 className="card-title">Take Home Pay</h5>
-            <label htmlFor="takeHomePay">
-              Enter your total take home pay. This is the amount that shows up
-              on your paycheck.
-            </label>
-            <input
-              onChange={e => {
-                setTakeHomePay(parseInt(e.target.value));
-              }}
-              type="number"
-              className="form-control"
-              id="takeHomePay"
-              aria-describedby="takeHomeHelp"
-              placeholder="Enter take home pay"
-            />
-            <small id="takeHomeHelp" className="form-text text-muted">
-              This is the amount that shows up on your paycheck.
-            </small>
-            <button
-              className="btn btn-success"
-              onClick={e => {
-                nextHandler(e);
-              }}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-        <Four01kDetails setPreTax401kHandler={setPreTax401k} />
-        <HsaDetails setPreTaxHsaHandler={setPreTaxHsa} />
-        <IraDetails setPreTaxIraHandler={setPreTaxIra} />
-        <AdditionalSavingsDetails
-          setAdditionalSavingsHandler={setAdditionalSavings}
-        />
+        <FormCard title={"Take Home Pay"}>
+          <label htmlFor="takeHomePay">
+            Enter your total take home pay. This is the amount that shows up on
+            your paycheck.
+          </label>
+          <input
+            onChange={e => {
+              setTakeHomePay(parseInt(e.target.value));
+            }}
+            type="number"
+            className="form-control"
+            id="takeHomePay"
+            aria-describedby="takeHomeHelp"
+            placeholder="Enter take home pay"
+          />
+          <small id="takeHomeHelp" className="form-text text-muted">
+            This is the amount that shows up on your paycheck.
+          </small>
+        </FormCard>
+        <FormCard title={"401k"}>
+          {/* TODO: add check mark to determine if it's Roth (after tax) or Traditional (Pre-tax) */}
+          <label htmlFor="401k">
+            If you contribute to a 401k, enter that amount here. Please include
+            any match that your employer may contribute.
+          </label>
+          <input
+            onChange={e => {
+              setPreTax401k(parseInt(e.target.value));
+            }}
+            type="number"
+            className="form-control"
+            id="401k"
+            placeholder="401k Total"
+          />
+        </FormCard>
+        <FormCard title={"HSA"}>
+          <label htmlFor="hsa">
+            Does your health plan offer an HSA? If so, and you contribute to it,
+            please enter that amount below. Also remember to include any
+            contributions that your employer makes as well.
+          </label>
+          <input
+            onChange={e => {
+              setPreTaxHsa(parseInt(e.target.value));
+            }}
+            type="number"
+            className="form-control"
+            id="hsa"
+            placeholder="HSA Total"
+          />
+        </FormCard>
+        <FormCard title={"IRA"}>
+          {/* TODO: add check mark to determine if it's Roth (after tax) or Traditional (Pre-tax) */}
+          <label htmlFor="ira">
+            If you contribute any money to an IRA (Roth or Traditional) please
+            enter that amount next.
+          </label>
+          <input
+            onChange={e => {
+              setPreTaxIra(parseInt(e.target.value));
+            }}
+            type="number"
+            className="form-control"
+            id="ira"
+            placeholder="IRA Total"
+          />
+        </FormCard>
+        <FormCard title={"Additional Savings"}>
+          <label htmlFor="additionalSavings">
+            Finally, please add include additional savings you make outside of a
+            401k, IRA, or HSA. This could include a normal savings account,
+            brokerage account, CD, etc.
+          </label>
+          <input
+            onChange={e => {
+              setAdditionalSavings(parseInt(e.target.value));
+            }}
+            type="number"
+            className="form-control"
+            id="additionalSacings"
+            placeholder="Additional Savings"
+          />
+        </FormCard>
         {/* <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1" />
           <label class="form-check-label" htmlFor="exampleCheck1">
