@@ -10,7 +10,7 @@ import Signup from "./utils/auth/Signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Budget from "./components/budget/Budget";
-import SavingsRate from "./components/savings-rate/SavingsRate";
+import SavingsRate from "./components/savings-rate/savings-rate";
 
 class App extends Component {
   render() {
